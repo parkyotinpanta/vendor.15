@@ -30,7 +30,7 @@ app.post('/add'), async (req, res) => {
         , add_email, vengroup_code, vat_type, vat_code, ven_discount, ven_ship_term, ven_ct_code, ven_credit_term
         , ven_credit_limit, ven_balance, contact_fdate, contact_ldate, cancel_date, rec_memo, ordering_date, ordering_cycle
         , AF_Status, ven_balance_cs, tax_id, tax_branch_id, tax_branch, dealercode, add_date, add_time, edit_date, edit_time
-        , add_tel1_ext, add_fax_ext, vender_type, add_phone, sap_no, } = req.body
+        , add_tel1_ext, add_fax_ext, vender_type, add_phone,sap_no} = req.body;
 
     try {
         connection.query(
@@ -40,18 +40,18 @@ app.post('/add'), async (req, res) => {
                 , add_email, vengroup_code, vat_type, vat_code, ven_discount, ven_ship_term, ven_ct_code, ven_credit_term
                 , ven_credit_limit, ven_balance, contact_fdate, contact_ldate, cancel_date, rec_memo, ordering_date, ordering_cycle
                 , AF_Status, ven_balance_cs, tax_id, tax_branch_id, tax_branch, dealercode, add_date, add_time, edit_date, edit_time
-                , add_tel1_ext, add_fax_ext, vender_type, add_phone, sap_no,],
+                , add_tel1_ext, add_fax_ext, vender_type, add_phone, sap_no],
             (err, results, fields) => {
                 if (err) {
-                    console.log('error');
-                    return res.status(400).send('good')
+                    console.log('Error while inserting a sb_vendor into the database', err);
+                    return res.status(400).send('มีปัญหา')
                 }
-                return res.status(200)
+                return res.status(200).json({ message: "ส่งได้แล้ว" })
             }
         )
     } catch (err) {
         console.log(err);
-        return res.status(500).send('not good')
+        return res.status(500).send('ส่งไม่ได้')
     }
 }
 
@@ -64,7 +64,7 @@ app.get('/list', async (req, res) => {
                 return res.status(400).send()
             }
             res.status(200).json(results)
-            })
+        })
 
     } catch (err) {
         console.log(err)
@@ -75,15 +75,15 @@ app.get('/list', async (req, res) => {
 
 // view only
 app.get('/view/only/:branch_no', async (req, res) => {
-        const branch_no = req.params.branch_no;
+    const branch_no = req.params.branch_no;
     try {
-        connection.query("SELECT * FROM sb_vendor WHERE branch_no = ?", [branch_no],(err, results, fields) => {
+        connection.query("SELECT * FROM sb_vendor WHERE branch_no = ?", [branch_no], (err, results, fields) => {
             if (err) {
                 console.log(err)
                 return res.status(400).send()
             }
             res.status(200).json(results)
-            })
+        })
 
     } catch (err) {
         console.log(err)
