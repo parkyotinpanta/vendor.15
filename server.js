@@ -22,7 +22,7 @@ connection.connect((err) => {
 })
 // Routes
 
-
+// หน้าadd ติดerrไปหมด
 // add
 app.post('/add'), async (req, res) => {
     const { branch_no, ven_code, ven_code_run, pre_name, ven_name, contact_name, add_name, add_no, add_moo
